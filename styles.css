@@ -40,3 +40,30 @@ button:hover {
 h2 {
     margin-bottom: 70px
 }
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 15px;
+    color: #837878;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-content span {
+    margin-right: 10px;
+}
+
+.footer-content span:last-child {
+    margin-right: 0;
+}
+
+.footer-content strong {
+    color: #53534b;
+}
