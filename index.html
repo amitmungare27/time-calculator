@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time Calculation</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+function calculateEndTime() {
+    // Function to parse time string and convert it to minutes
+    function parseTimeToMinutes(timeString) {
+        const [hours, minutes] = timeString.split(' ');
+        const hoursInMinutes = parseInt(hours) * 60;
+        const totalMinutes = hoursInMinutes + parseInt(minutes);
+        return totalMinutes;
+    }
+
+    // Function to format minutes to HH:MM format
+    function formatMinutesToTime(minutes) {
+        const hours = Math.floor(minutes / 60);
+        const remainingMinutes = minutes % 60;
+        const formattedHours = hours < 10 ? '0' + hours : hours;
+        const formattedMinutes = remainingMinutes < 10 ? '0' + remainingMinutes : remainingMinutes;
+        return `${formattedHours}:${formattedMinutes}`;
+    }
+
+    // Given data
+    const hours1 = document.getElementById('hours1').value;
+    const startTime = document.getElementById('startTime').value;
+    const moreHours = "8h 30m";
+
+    // Parse hours and minutes
+    const hours1Minutes = parseTimeToMinutes(hours1);
+    const moreHoursMinutes = parseTimeToMinutes(moreHours);
+
+    // Convert startTime to minutes
+    const [time, ampm] = startTime.split(' ');
+    const [hours, minutes, seconds] = time.split(':').map(Number);
+    let startTimeMinutes = hours * 60 + minutes;
+    if (ampm === "PM") {
+        startTimeMinutes += 12 * 60;
+    }
+
+    // Calculate end time in minutes
+    const endTimeMinutes = startTimeMinutes + moreHoursMinutes - hours1Minutes;
+
+    // Format end time
+    const endHours = Math.floor(endTimeMinutes / 60) % 12 || 12;
+    const endMinutes = endTimeMinutes % 60;
+    const endAMPM = endTimeMinutes < (12 * 60) ? "AM" : "PM";
+    const endTime = `${endHours}:${endMinutes < 10 ? '0' + endMinutes : endMinutes}:${seconds < 10 ? '0' + seconds : seconds} ${endAMPM}`;
+
+    document.getElementById('endTime').textContent = "End Time: " + endTime;
+}
+</script>
+</head>
+<body>
+<h2>Time Calculation</h2>
+<label for="hours1">Effective Hours</label>
+<input type="text" id="hours1" placeholder="4h 31m"><br><br>
+
+<label for="startTime">Clockin time after lunch</label>
+<input type="text" id="startTime" placeholder="2:09:30 PM"><br><br>
+
+<!-- <label for="moreHours">More Hours:</label>
+<input type="text" id="moreHours" value="8h 30m"><br><br> -->
+
+<button onclick="calculateEndTime()">Clockout time</button><br><br>
+
+<p id="endTime"></p>
+
+</body>
+</html>
